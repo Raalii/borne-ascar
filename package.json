@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "npx prisma db seed",
-    "seed_direct": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/index.ts",
-    "start_server": "node server.js"
+    "seed_direct": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/index.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/index.ts"
