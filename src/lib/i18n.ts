@@ -61,7 +61,7 @@ i18n
   });
 
 // Store Zustand pour la gestion de la langue
-export const useLanguageStore = create<LanguageState>(
+export const useLanguageStore = create<LanguageState>()(
   persist(
     (set) => ({
       language: i18n.language || defaultLanguage,
