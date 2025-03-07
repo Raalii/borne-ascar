@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./cyberpunk-theme.css";
 import "./globals.css";
 import { Providers } from "./providers";
 

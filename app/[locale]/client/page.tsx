@@ -1,10 +1,9 @@
 "use client";
 
-// Composant de changement de langue
 import { useSocket } from "@/src/hooks/useSocket";
 import LanguageSwitcher from "@/src/i18n/LanguageSwitcher";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next"; // Import pour i18n
+import { useTranslation } from "react-i18next";
 
 // Types pour les produits et le panier
 type Product = {
@@ -15,6 +14,10 @@ type Product = {
   stock: number;
   isAvailable: boolean;
   description?: string;
+  translations?: {
+    fr?: { name: string; description: string };
+    en?: { name: string; description: string };
+  };
 };
 
 type CartItem = {
@@ -26,7 +29,8 @@ type CartItem = {
 
 export default function ClientPage() {
   // Initialiser i18n
-  const { t } = useTranslation(["common", "client"]);
+  const { t, i18n } = useTranslation(["common", "client"]);
+  const currentLanguage = i18n.language || "fr";
 
   // État pour les produits, le panier et le formulaire de commande
   const [products, setProducts] = useState<Product[]>([]);
@@ -64,6 +68,28 @@ export default function ClientPage() {
 
     loadProducts();
   }, []);
+
+  // Fonction pour obtenir le nom traduit d'un produit
+  const getTranslatedProductName = (product: Product): string => {
+    if (
+      product.translations &&
+      product.translations[currentLanguage as "fr" | "en"]?.name
+    ) {
+      return product.translations[currentLanguage as "fr" | "en"]!.name;
+    }
+    return product.name;
+  };
+
+  // Fonction pour obtenir la description traduite d'un produit
+  const getTranslatedProductDescription = (product: Product): string => {
+    if (
+      product.translations &&
+      product.translations[currentLanguage as "fr" | "en"]?.description
+    ) {
+      return product.translations[currentLanguage as "fr" | "en"]!.description;
+    }
+    return product.description || "";
+  };
 
   // Écouter les mises à jour de produits
   useEffect(() => {
@@ -139,6 +165,8 @@ export default function ClientPage() {
         return prevCart;
       }
 
+      const translatedName = getTranslatedProductName(product);
+
       if (existingItem) {
         // Augmenter la quantité si l'article existe déjà
         return prevCart.map((item) =>
@@ -147,8 +175,8 @@ export default function ClientPage() {
             : item
         );
       } else {
-        // Ajouter un nouvel article
-        return [...prevCart, { ...product, quantity: 1 }];
+        // Ajouter un nouvel article avec le nom traduit
+        return [...prevCart, { ...product, name: translatedName, quantity: 1 }];
       }
     });
   };
@@ -213,45 +241,56 @@ export default function ClientPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="min-h-screen bg-black text-green-400 py-8 relative overflow-hidden">
+      {/* Overlay de grille cyberpunk */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+
+      {/* Effet de néon lumineux */}
+      <div className="absolute top-1/4 -left-20 w-40 h-40 rounded-full bg-purple-500 filter blur-3xl opacity-10"></div>
+      <div className="absolute bottom-1/4 -right-20 w-40 h-40 rounded-full bg-green-500 filter blur-3xl opacity-10"></div>
+
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">{t("client:page_title")}</h1>
+          <h1 className="text-3xl font-bold text-green-400 font-mono tracking-widest">
+            {t("client:page_title")}
+            <span className="animate-pulse ml-2">_</span>
+          </h1>
           <LanguageSwitcher />
         </div>
 
-        {!isConnected && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            <p>{t("common:connection_status.connect_error")}</p>
-            {error && <p className="mt-1 text-sm">{error}</p>}
-          </div>
+        {!isConnected && !isLoading && (
+          // <div className="border border-red-600 bg-red-900/30 text-red-400 px-4 py-3 rounded-md mb-6 backdrop-blur-sm">
+          //   <p>{t("common:connection_status.connect_error")}</p>
+          //   {error && <p className="mt-1 text-sm">{error}</p>}
+          // </div>
+          <></>
         )}
 
         {orderSubmitted ? (
-          <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">
+          <div className="border border-green-500/50 bg-black/80 backdrop-blur-sm rounded-lg shadow-[0_0_15px_rgba(0,255,0,0.3)] p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4 text-green-400">
               {t("client:order_submitted.title")}
             </h2>
-            <p className="text-lg mb-2">
+            <p className="text-lg mb-2 text-green-300">
               {t("client:order_submitted.order_number")}{" "}
-              <span className="font-bold">{orderNumber}</span>
+              <span className="font-bold text-green-400">{orderNumber}</span>
             </p>
             <p className="mb-6">
               {t("client:order_submitted.thank_you")} {customerName}.
             </p>
 
-            <div className="mb-6 p-4 border rounded bg-gray-50">
-              <h3 className="font-bold mb-2">
+            <div className="mb-6 p-4 border border-green-500/30 rounded bg-black/50 backdrop-blur-sm">
+              <h3 className="font-bold mb-2 text-green-300">
                 {t("client:order_submitted.status_title")}
               </h3>
               <div className="flex items-center justify-center space-x-4">
                 <span
                   className={`px-3 py-1 rounded-full ${
                     orderStatus === "READY" || orderStatus === "COMPLETED"
-                      ? "bg-green-100 text-green-800"
+                      ? "bg-green-900/70 text-green-300 border border-green-500"
                       : orderStatus === "CANCELLED"
-                      ? "bg-red-100 text-red-800"
-                      : "bg-blue-100 text-blue-800"
+                      ? "bg-red-900/70 text-red-300 border border-red-500"
+                      : "bg-blue-900/70 text-blue-300 border border-blue-500"
                   }`}
                 >
                   {t(`common:order_status.${orderStatus}`)}
@@ -260,8 +299,8 @@ export default function ClientPage() {
                 <span
                   className={`px-3 py-1 rounded-full ${
                     isPaid
-                      ? "bg-green-100 text-green-800"
-                      : "bg-yellow-100 text-yellow-800"
+                      ? "bg-green-900/70 text-green-300 border border-green-500"
+                      : "bg-yellow-900/70 text-yellow-300 border border-yellow-500"
                   }`}
                 >
                   {t(`common:payment_status.${isPaid ? "paid" : "unpaid"}`)}
@@ -271,7 +310,7 @@ export default function ClientPage() {
 
             <button
               onClick={newOrder}
-              className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg"
+              className="px-6 py-3 bg-green-900/50 border border-green-500 text-green-400 font-bold rounded-lg hover:bg-green-800/50 hover:shadow-[0_0_10px_rgba(0,255,0,0.5)] transition-all"
             >
               {t("common:button.new_order")}
             </button>
@@ -280,14 +319,14 @@ export default function ClientPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Liste de produits */}
             <div className="md:col-span-2">
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-xl font-bold mb-4">
+              <div className="border border-green-500/30 bg-black/80 backdrop-blur-sm rounded-lg shadow-[0_0_15px_rgba(0,255,0,0.15)] p-6">
+                <h2 className="text-xl font-bold mb-4 text-green-400 font-mono">
                   {t("client:products_title")}
                 </h2>
 
                 {isLoading ? (
                   <div className="flex justify-center items-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
                   </div>
                 ) : (
                   <>
@@ -297,7 +336,7 @@ export default function ClientPage() {
 
                       return (
                         <div key={category} className="mb-8">
-                          <h3 className="text-lg font-semibold mb-3 border-b pb-2">
+                          <h3 className="text-lg font-mono font-semibold mb-3 border-b border-green-500/30 pb-2 text-green-400">
                             {t(`common:categories.${category}`)}
                           </h3>
 
@@ -305,39 +344,43 @@ export default function ClientPage() {
                             {categoryProducts.map((product) => (
                               <div
                                 key={product.id}
-                                className={`border rounded-lg p-4 ${
+                                className={`group border border-green-500/30 rounded-lg p-4 ${
                                   product.stock > 0
-                                    ? "hover:shadow-md cursor-pointer"
+                                    ? "hover:border-green-400 hover:shadow-[0_0_10px_rgba(0,255,0,0.3)] cursor-pointer transition-all"
                                     : "opacity-50 cursor-not-allowed"
                                 }`}
                                 onClick={() =>
                                   product.stock > 0 && addToCart(product)
                                 }
                               >
-                                <div className="h-24 bg-gray-200 rounded-md mb-3 flex items-center justify-center">
-                                  <span className="text-gray-500">
+                                <div className="h-24 bg-gray-900 rounded-md mb-3 flex items-center justify-center border border-green-500/20 overflow-hidden">
+                                  <span className="text-green-500 font-mono">
                                     {t(`common:categories.${product.category}`)}
                                   </span>
                                 </div>
-                                <h3 className="font-bold">{product.name}</h3>
-                                {product.description && (
-                                  <p className="text-sm text-gray-500 mt-1">
-                                    {product.description}
+                                <h3 className="font-bold text-green-400">
+                                  {getTranslatedProductName(product)}
+                                </h3>
+                                {getTranslatedProductDescription(product) && (
+                                  <p className="text-sm text-green-300/80 mt-1">
+                                    {getTranslatedProductDescription(product)}
                                   </p>
                                 )}
                                 <div className="flex justify-between items-center mt-2">
-                                  <span>{product.price.toFixed(2)} €</span>
+                                  <span className="text-green-400">
+                                    {product.price.toFixed(2)} €
+                                  </span>
                                   <div className="flex items-center">
-                                    <span className="text-xs text-gray-500 mr-2">
+                                    <span className="text-xs text-green-500/80 mr-2">
                                       {t("client:product.stock")}{" "}
                                       {product.stock}
                                     </span>
                                     <button
                                       className={`px-2 py-1 ${
                                         product.stock > 0
-                                          ? "bg-green-500 text-white"
-                                          : "bg-gray-300"
-                                      } rounded-full text-xs`}
+                                          ? "bg-green-900 text-green-400 border border-green-500 group-hover:bg-green-800"
+                                          : "bg-gray-800 text-gray-300 border border-gray-700"
+                                      } rounded-full text-xs transition-colors`}
                                       disabled={product.stock <= 0}
                                     >
                                       + {t("client:product.add")}
@@ -357,8 +400,8 @@ export default function ClientPage() {
 
             {/* Panier et formulaire de commande */}
             <div className="md:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
-                <h2 className="text-xl font-bold mb-4">
+              <div className="border border-green-500/30 bg-black/80 backdrop-blur-sm rounded-lg shadow-[0_0_15px_rgba(0,255,0,0.15)] p-6 sticky top-8">
+                <h2 className="text-xl font-bold mb-4 text-green-400 font-mono">
                   {t("client:cart_title")}
                 </h2>
 
@@ -366,22 +409,27 @@ export default function ClientPage() {
                   <p className="text-gray-500 mb-4">{t("common:cart_empty")}</p>
                 ) : (
                   <div className="mb-4">
-                    <ul className="divide-y">
+                    <ul className="divide-y divide-green-500/30">
                       {cart.map((item) => (
                         <li key={item.id} className="py-2 flex justify-between">
                           <div>
-                            <span className="font-medium">{item.name}</span>
-                            <span className="text-sm text-gray-500 ml-2">
+                            <span className="font-medium text-green-400">
+                              {item.name}
+                            </span>
+                            <span className="text-sm text-green-500/80 ml-2">
                               x{item.quantity}
                             </span>
                           </div>
                           <div className="flex items-center">
-                            <span className="mr-2">
+                            <span className="mr-2 text-green-400">
                               {(item.price * item.quantity).toFixed(2)} €
                             </span>
                             <button
-                              onClick={() => removeFromCart(item.id)}
-                              className="text-red-500 hover:text-red-700"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeFromCart(item.id);
+                              }}
+                              className="text-red-400 hover:text-red-300"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -401,20 +449,24 @@ export default function ClientPage() {
                       ))}
                     </ul>
 
-                    <div className="mt-4 pt-4 border-t">
+                    <div className="mt-4 pt-4 border-t border-green-500/30">
                       <div className="flex justify-between font-bold">
-                        <span>{t("common:total")}:</span>
-                        <span>{getTotal().toFixed(2)} €</span>
+                        <span className="text-green-400">
+                          {t("common:total")}:
+                        </span>
+                        <span className="text-green-400">
+                          {getTotal().toFixed(2)} €
+                        </span>
                       </div>
                     </div>
                   </div>
                 )}
 
-                <form onSubmit={submitOrder}>
-                  <div className="mb-4">
+                <form onSubmit={submitOrder} className="space-y-4">
+                  <div>
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium mb-1"
+                      className="block text-sm font-medium mb-1 text-green-400"
                     >
                       {t("client:form.name_label")}
                     </label>
@@ -423,14 +475,14 @@ export default function ClientPage() {
                       id="name"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full px-3 py-2 border rounded"
+                      className="w-full px-3 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:ring-1 focus:ring-green-500 focus:outline-none"
                       placeholder={t("client:form.name_placeholder")}
                       required
                     />
                   </div>
 
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium mb-1">
+                  <div>
+                    <label className="block text-sm font-medium mb-1 text-green-400">
                       {t("client:form.payment_method_label")}
                     </label>
                     <div className="flex space-x-4">
@@ -442,9 +494,9 @@ export default function ClientPage() {
                             value={method}
                             checked={paymentMethod === method}
                             onChange={() => setPaymentMethod(method)}
-                            className="mr-1"
+                            className="mr-1 text-green-500 border-green-500 focus:ring-green-500"
                           />
-                          <span>
+                          <span className="text-green-400">
                             {t(`client:form.payment_methods.${method}`)}
                           </span>
                         </label>
@@ -457,8 +509,8 @@ export default function ClientPage() {
                     disabled={!isConnected || cart.length === 0}
                     className={`w-full py-3 rounded-lg font-bold ${
                       !isConnected || cart.length === 0
-                        ? "bg-gray-300 cursor-not-allowed"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
+                        ? "bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700"
+                        : "bg-green-900/50 text-green-400 hover:bg-green-800/50 hover:shadow-[0_0_10px_rgba(0,255,0,0.3)] border border-green-500 transition-all"
                     }`}
                   >
                     {!isConnected

@@ -45,10 +45,10 @@ export default function LanguageSwitcher({
         <button
           key={lang}
           onClick={() => handleLanguageChange(lang)}
-          className={`px-2 py-1 text-sm rounded ${
+          className={`px-3 py-1 text-sm rounded transition-all ${
             language === lang
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 hover:bg-gray-300"
+              ? "bg-green-900/50 text-green-400 shadow-[0_0_8px_rgba(0,255,0,0.3)] border border-green-500"
+              : "bg-black/50 text-gray-400 hover:text-green-400 border border-green-500/30 hover:border-green-500/70"
           }`}
           aria-label={`${t("language.select")}: ${t(`language.${lang}`)}`}
         >

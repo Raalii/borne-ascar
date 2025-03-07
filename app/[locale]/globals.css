@@ -125,129 +125,15 @@
   }
 }
 
-.product-card {
-  @apply relative border rounded-xl p-4 w-full;
-  @apply bg-card/80 shadow-md text-center cursor-pointer;
-  @apply overflow-hidden transition-all duration-300;
-  border-color: oklch(0.5 0.18 140 / 60%);
-}
-
-.product-card:hover:not(.out-of-stock) {
-  @apply -translate-y-1;
-  box-shadow: 0 0 15px oklch(0.8 0.28 140 / 50%);
-  border-color: var(--neon-green);
-}
-
-.product-card.out-of-stock {
-  @apply opacity-60 cursor-not-allowed relative;
-}
-
-.product-card.out-of-stock::after {
-  content: attr(data-out-of-stock);
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-12;
-  @apply bg-destructive/80 text-white py-1 px-4 rounded font-bold;
-  @apply text-lg tracking-wider shadow-md z-20 pointer-events-none;
-}
-
-.cyber-button {
-  @apply mt-4 py-3 px-6 font-bold text-base;
-  @apply bg-secondary/80 text-primary rounded-lg transition-all duration-300;
-  @apply relative overflow-hidden;
-  box-shadow: 0 0 10px oklch(0.8 0.28 140 / 40%);
-  border: 1px solid oklch(0.8 0.28 140 / 50%);
-}
-
-.cyber-button::before {
-  content: "";
-  @apply absolute top-0 -left-full w-full h-full;
-  @apply transition-all duration-500;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    oklch(1 0 0 / 20%),
-    transparent
-  );
-}
-
-.cyber-button:hover:not(:disabled) {
-  @apply -translate-y-0.5;
-  box-shadow: 0 0 20px oklch(0.8 0.28 140 / 60%);
-}
-
-.cyber-button:hover::before {
-  @apply left-full;
-}
-
-.cyber-button:disabled {
-  @apply opacity-50 cursor-not-allowed;
-}
-
-.input-cyber {
-  @apply bg-card/80 rounded-md;
-  @apply text-foreground p-3 w-full transition-colors duration-300;
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-0;
-  border: 1px solid oklch(0.8 0.28 140 / 30%);
-}
-
-.input-cyber:focus {
-  box-shadow: 0 0 8px oklch(0.8 0.28 140 / 50%);
-  border-color: var(--neon-green);
-}
-
-.status-badge {
-  @apply px-2 py-1 text-xs rounded-full font-medium;
-}
-
-.status-badge-new {
-  @apply bg-blue-500/20 text-blue-400 border border-blue-500/30;
-}
-
-.status-badge-preparing {
-  @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30;
-}
-
-.status-badge-ready {
-  @apply bg-primary/20 border border-primary/30;
-  color: var(--neon-green);
-}
-
-.status-badge-completed {
-  @apply bg-purple-500/20 text-purple-400 border border-purple-500/30;
-}
-
-.status-badge-cancelled {
-  @apply bg-destructive/20 text-destructive border border-destructive/30;
-}
-
-.status-badge-paid {
-  @apply bg-primary/20 border border-primary/30;
-  color: var(--neon-green);
-}
-
-.status-badge-unpaid {
-  @apply bg-destructive/20 text-destructive border border-destructive/30;
-}
-
-.language-selector {
-  @apply border rounded-md overflow-hidden flex text-sm;
-  border-color: oklch(0.8 0.28 140 / 30%);
-}
-
-.language-option {
-  @apply px-3 py-1 cursor-pointer transition-colors duration-300;
-}
-
-.language-option.active {
-  background-color: var(--neon-green);
-  color: var(--cyber-black);
-  @apply font-medium;
-}
-
-.language-option:not(.active) {
-  @apply bg-card/70;
-  color: var(--neon-green);
-}
-
-.language-option:not(.active):hover {
-  background-color: oklch(0.8 0.28 140 / 20%);
+/* Style cyberpunk */
+@layer utilities {
+  .bg-grid-pattern {
+    background-size: 50px 50px;
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 255, 0, 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+  }
 }
