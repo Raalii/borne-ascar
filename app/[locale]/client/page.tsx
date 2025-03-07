@@ -47,6 +47,8 @@ export default function ClientPage() {
   // Connexion Socket.io
   const { socket, isConnected, error } = useSocket("customer");
 
+  console.log(error);
+
   // Charger les produits au démarrage
   useEffect(() => {
     async function loadProducts() {

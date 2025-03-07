@@ -23,6 +23,7 @@ type Order = {
   paiement?: string;
   paymentMethod?: string;
   panier?: OrderItem[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items?: any[];
   status: "NEW" | "PREPARING" | "READY" | "COMPLETED" | "CANCELLED";
   isPaid: boolean;
@@ -61,6 +62,7 @@ export default function KitchenPage() {
         const data = await response.json();
 
         // Mapper les commandes pour notre interface
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mappedOrders: Order[] = data.orders.map((order: any) => ({
           id: order.id,
           number: order.number,
@@ -74,6 +76,7 @@ export default function KitchenPage() {
           totalAmount: order.totalAmount,
           createdAt: order.createdAt,
           updatedAt: order.updatedAt,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           panier: order.items.map((item: any) => ({
             id: item.id,
             nom: item.productSnapshot?.nom || "Produit",
@@ -162,6 +165,7 @@ export default function KitchenPage() {
   }, [socket, t]);
 
   // Normaliser les données de commande (pour gérer les différents formats)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const normalizeOrderData = (data: any): Order => {
     // Extraire instructions
     const instructions = data.instructions || "";
@@ -179,7 +183,8 @@ export default function KitchenPage() {
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
       panier: Array.isArray(data.items)
-        ? data.items.map((item: any) => ({
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          data.items.map((item: any) => ({
             id: item.id,
             nom:
               item.productSnapshot?.nom ||
