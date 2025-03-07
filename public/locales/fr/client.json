@@ -1,0 +1,38 @@
+{
+  "page_title": "Borne de Commande - Interface Client",
+  "products_title": "Produits disponibles",
+  "cart_title": "Votre panier",
+  "form": {
+    "name_label": "Votre nom:",
+    "name_placeholder": "Entrez votre nom",
+    "instructions_label": "Instructions spéciales:",
+    "instructions_placeholder": "Ajoutez des instructions spécifiques pour votre commande",
+    "payment_method_label": "Mode de paiement:",
+    "payment_methods": {
+      "CARD": "Carte",
+      "CASH": "Espèces",
+      "PAYPAL": "PayPal"
+    },
+    "validation": {
+      "name_required": "Veuillez entrer votre nom",
+      "cart_empty": "Votre panier est vide"
+    }
+  },
+  "order_submitted": {
+    "title": "Commande envoyée !",
+    "order_number": "Numéro de commande:",
+    "thank_you": "Merci pour votre commande,",
+    "status_title": "Statut de votre commande:"
+  },
+  "product": {
+    "stock": "Stock:",
+    "add": "Ajouter",
+    "out_of_stock": "Épuisé",
+    "stock_limit": "Désolé, seulement {{stock}} unité(s) disponible(s) pour ce produit."
+  },
+  "button_state": {
+    "disconnected": "Non connecté",
+    "cart_empty": "Panier vide",
+    "order": "Commander"
+  }
+}

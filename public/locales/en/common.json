@@ -1,0 +1,38 @@
+{
+  "app_title": "Order Kiosk - Smash Tournament",
+  "connection_status": {
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "connect_error": "Not connected to server. Please check your internet connection."
+  },
+  "language": {
+    "select": "Select your language",
+    "fr": "French",
+    "en": "English"
+  },
+  "order_status": {
+    "NEW": "New order",
+    "PREPARING": "Preparing",
+    "READY": "Ready",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled"
+  },
+  "payment_status": {
+    "paid": "Paid",
+    "unpaid": "Unpaid"
+  },
+  "button": {
+    "new_order": "New order",
+    "submit_order": "Place order",
+    "cancel": "Cancel",
+    "back": "Back"
+  },
+  "cart_empty": "Your cart is empty",
+  "total": "Total",
+  "categories": {
+    "DRINK": "Drinks",
+    "FOOD": "Food",
+    "DESSERT": "Desserts",
+    "SNACK": "Snacks"
+  }
+}

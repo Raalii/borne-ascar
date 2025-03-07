@@ -1,0 +1,33 @@
+{
+  "page_title": "Interface Cuisine",
+  "connection_info": "Clients connectés: {{customers}} | Cuisines: {{kitchen}}",
+  "no_orders": "Aucune commande {{status}}",
+  "no_orders_status": "au statut \"{{status}}\"",
+  "loading": "Chargement des commandes...",
+  "client_label": "Client:",
+  "instructions_label": "Instructions:",
+  "items_label": "Articles:",
+  "buttons": {
+    "start_preparing": "Commencer la préparation",
+    "mark_ready": "Marquer comme prête",
+    "complete": "Terminer la commande",
+    "cancel": "Annuler"
+  },
+  "tabs": {
+    "all": "TOUT"
+  },
+  "errors": {
+    "load_failed": "Échec du chargement des commandes",
+    "load_error": "Erreur lors du chargement des commandes:",
+    "audio_error": "Erreur audio:",
+    "audio_not_supported": "Audio non supporté:"
+  },
+  "log": {
+    "new_order": "Nouvelle commande reçue:",
+    "order_updated": "Commande mise à jour:",
+    "status_changed": "Statut de commande modifié:",
+    "clients_count": "Clients connectés:"
+  },
+  "product_default": "Produit",
+  "order_number": "Commande #{{number}}"
+}

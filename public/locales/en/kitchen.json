@@ -1,0 +1,33 @@
+{
+  "page_title": "Kitchen Interface",
+  "connection_info": "Connected clients: {{customers}} | Kitchens: {{kitchen}}",
+  "no_orders": "No orders {{status}}",
+  "no_orders_status": "with \"{{status}}\" status",
+  "loading": "Loading orders...",
+  "client_label": "Customer:",
+  "instructions_label": "Instructions:",
+  "items_label": "Items:",
+  "buttons": {
+    "start_preparing": "Start preparing",
+    "mark_ready": "Mark as ready",
+    "complete": "Complete order",
+    "cancel": "Cancel"
+  },
+  "tabs": {
+    "all": "ALL"
+  },
+  "errors": {
+    "load_failed": "Failed to load orders",
+    "load_error": "Error loading orders:",
+    "audio_error": "Audio error:",
+    "audio_not_supported": "Audio not supported:"
+  },
+  "log": {
+    "new_order": "New order received:",
+    "order_updated": "Order updated:",
+    "status_changed": "Order status changed:",
+    "clients_count": "Connected clients:"
+  },
+  "product_default": "Product",
+  "order_number": "Order #{{number}}"
+}

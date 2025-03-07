@@ -1,0 +1,38 @@
+{
+  "page_title": "Order Kiosk - Customer Interface",
+  "products_title": "Available Products",
+  "cart_title": "Your Cart",
+  "form": {
+    "name_label": "Your name:",
+    "name_placeholder": "Enter your name",
+    "instructions_label": "Special instructions:",
+    "instructions_placeholder": "Add any specific instructions for your order",
+    "payment_method_label": "Payment method:",
+    "payment_methods": {
+      "CARD": "Card",
+      "CASH": "Cash",
+      "PAYPAL": "PayPal"
+    },
+    "validation": {
+      "name_required": "Please enter your name",
+      "cart_empty": "Your cart is empty"
+    }
+  },
+  "order_submitted": {
+    "title": "Order sent!",
+    "order_number": "Order number:",
+    "thank_you": "Thank you for your order,",
+    "status_title": "Your order status:"
+  },
+  "product": {
+    "stock": "Stock:",
+    "add": "Add",
+    "stock_limit": "Sorry, only {{stock}} unit(s) available for this product.",
+    "out_of_stock": "Out of stock"
+  },
+  "button_state": {
+    "disconnected": "Not connected",
+    "cart_empty": "Cart empty",
+    "order": "Place order"
+  }
+}

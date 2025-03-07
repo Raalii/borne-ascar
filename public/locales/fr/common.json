@@ -1,0 +1,38 @@
+{
+  "app_title": "Borne de Commande - Tournoi Smash",
+  "connection_status": {
+    "connected": "Connecté",
+    "disconnected": "Déconnecté",
+    "connect_error": "Non connecté au serveur. Vérifiez votre connexion Internet."
+  },
+  "language": {
+    "select": "Sélectionnez votre langue",
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "order_status": {
+    "NEW": "Nouvelle commande",
+    "PREPARING": "En préparation",
+    "READY": "Prête",
+    "COMPLETED": "Terminée",
+    "CANCELLED": "Annulée"
+  },
+  "payment_status": {
+    "paid": "Payé",
+    "unpaid": "Non payé"
+  },
+  "button": {
+    "new_order": "Nouvelle commande",
+    "submit_order": "Commander",
+    "cancel": "Annuler",
+    "back": "Retour"
+  },
+  "cart_empty": "Votre panier est vide",
+  "total": "Total",
+  "categories": {
+    "DRINK": "Boissons",
+    "FOOD": "Plats",
+    "DESSERT": "Desserts",
+    "SNACK": "Snacks"
+  }
+}
