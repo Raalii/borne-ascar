@@ -1,9 +1,8 @@
-// src/app/api/products/[id]/route.ts
 import { prisma } from "@/src/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -12,14 +11,12 @@ export async function GET(
         id: params.id,
       },
     });
-
     if (!product) {
       return NextResponse.json(
         { error: "Produit non trouvé" },
         { status: 404 }
       );
     }
-
     return NextResponse.json({ product });
   } catch (error) {
     console.error("Erreur lors de la récupération du produit:", error);
