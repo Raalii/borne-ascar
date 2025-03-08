@@ -12,6 +12,7 @@ type Product = {
   price: number;
   category: string;
   stock: number;
+  image?: string;
   isAvailable: boolean;
   description?: string;
   translations?: {
@@ -356,9 +357,39 @@ export default function ClientPage() {
                                 }
                               >
                                 <div className="h-24 bg-gray-900 rounded-md mb-3 flex items-center justify-center border border-green-500/20 overflow-hidden">
-                                  <span className="text-green-500 font-mono">
-                                    {t(`common:categories.${product.category}`)}
-                                  </span>
+                                  {product.image ? (
+                                    <img
+                                      src={`${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/images/${product.image}`}
+                                      alt={getTranslatedProductName(product)}
+                                      className="h-full w-full object-cover"
+                                      onError={(e) => {
+                                        // Fallback en cas d'erreur de chargement d'image
+                                        e.currentTarget.src = ""; // Vider la source
+                                        e.currentTarget.classList.add("hidden");
+                                        e.currentTarget.parentElement?.classList.add(
+                                          "flex"
+                                        );
+                                        if (e.currentTarget.parentElement) {
+                                          const span =
+                                            document.createElement("span");
+                                          span.className =
+                                            "text-green-500 font-mono";
+                                          span.textContent = t(
+                                            `common:categories.${product.category}`
+                                          );
+                                          e.currentTarget.parentElement.appendChild(
+                                            span
+                                          );
+                                        }
+                                      }}
+                                    />
+                                  ) : (
+                                    <span className="text-green-500 font-mono">
+                                      {t(
+                                        `common:categories.${product.category}`
+                                      )}
+                                    </span>
+                                  )}
                                 </div>
                                 <h3 className="font-bold text-green-400">
                                   {getTranslatedProductName(product)}
