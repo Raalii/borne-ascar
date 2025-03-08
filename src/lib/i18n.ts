@@ -48,12 +48,21 @@ i18n
   .init({
     fallbackLng: defaultLanguage,
     debug: process.env.NODE_ENV === "development",
+    load: "languageOnly",
     interpolation: {
       escapeValue: false,
     },
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
+      convertDetectedLanguage: (lng) => {
+        // Si lng est un format comme fr-FR, ne garder que fr
+        if (lng.includes("-")) {
+          const simpleLang = lng.split("-")[0];
+          return languages.includes(simpleLang) ? simpleLang : defaultLanguage;
+        }
+        return languages.includes(lng) ? lng : defaultLanguage;
+      },
     },
     resources,
     ns: ["common", "client", "kitchen"],
